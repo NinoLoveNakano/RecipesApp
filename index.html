@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планировщик Рецептов</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🍳 Планировщик Рецептов</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-view="recipes">Рецепты</a></li>
+                <li><a href="#" class="nav-link" data-view="planner">План Питания</a></li>
+                <li><a href="#" class="nav-link" data-view="shopping">Список Покупок</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-btn" class="btn-icon" title="Переключить тему">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="recipes-view" class="view active">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Мои Рецепты</h2>
+                    <div class="recipe-actions">
+                        <button id="add-recipe-btn" class="btn btn-primary">+ Добавить Рецепт</button>
+                    </div>
+                </div>
+
+
+                <div class="search-filters">
+                    <div class="search-bar">
+                        <input type="text" id="recipe-search" placeholder="Поиск по названию или ингредиентам...">
+                        <button id="search-btn" class="btn-icon">🔍</button>
+                    </div>
+                    <div class="filters">
+                        <select id="category-filter">
+                            <option value="">Все категории</option>
+                            <option value="завтрак">Завтрак</option>
+                            <option value="обед">Обед</option>
+                            <option value="ужин">Ужин</option>
+                            <option value="десерт">Десерт</option>
+                            <option value="выпечка">Выпечка</option>
+                            <option value="закуски">Закуски</option>
+                        </select>
+                        <select id="difficulty-filter">
+                            <option value="">Любая сложность</option>
+                            <option value="легко">Легко</option>
+                            <option value="средне">Средне</option>
+                            <option value="сложно">Сложно</option>
+                        </select>
+                        <select id="time-filter">
+                            <option value="">Любое время</option>
+                            <option value="15">До 15 мин</option>
+                            <option value="30">До 30 мин</option>
+                            <option value="60">До 1 часа</option>
+                            <option value="120">До 2 часов</option>
+                        </select>
+                        <select id="novelty-filter">
+                            <option value="">По новизне</option>
+                            <option value="newest">Сначала новые</option>
+                            <option value="oldest">Сначала старые</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="recipes-grid" class="recipes-grid">
+                </div>
+
+                <div id="recipes-empty" class="empty-state" style="display: none;">
+                    <h3>Нет рецептов</h3>
+                    <p>Начните добавлять свои любимые рецепты!</p>
+                    <button class="btn btn-primary">Добавить первый рецепт</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="planner-view" class="view">
+            <div class="container">
+                <div class="section-header">
+                    <h2>План Питания на Неделю</h2>
+                    <div class="planner-controls">
+                        <button id="auto-fill-btn" class="btn btn-primary">Автозаполнение</button>
+                    </div>
+                </div>
+
+                <div class="meal-planner">
+                    <div class="days-header">
+                        <div class="meal-type-column"></div>
+                        <div class="day-header">Пн</div>
+                        <div class="day-header">Вт</div>
+                        <div class="day-header">Ср</div>
+                        <div class="day-header">Чт</div>
+                        <div class="day-header">Пт</div>
+                        <div class="day-header">Сб</div>
+                        <div class="day-header">Вс</div>
+                    </div>
+
+                    <div class="meal-grid">
+                        <div class="meal-type-row">
+                            <div class="meal-type-label">Завтрак</div>
+                            <div class="meal-slot" data-day="monday" data-meal="breakfast"></div>
+                            <div class="meal-slot" data-day="tuesday" data-meal="breakfast"></div>
+                            <div class="meal-slot" data-day="wednesday" data-meal="breakfast"></div>
+                            <div class="meal-slot" data-day="thursday" data-meal="breakfast"></div>
+                            <div class="meal-slot" data-day="friday" data-meal="breakfast"></div>
+                            <div class="meal-slot" data-day="saturday" data-meal="breakfast"></div>
+                            <div class="meal-slot" data-day="sunday" data-meal="breakfast"></div>
+                        </div>
+
+                        <div class="meal-type-row">
+                            <div class="meal-type-label">Обед</div>
+                            <div class="meal-slot" data-day="monday" data-meal="lunch"></div>
+                            <div class="meal-slot" data-day="tuesday" data-meal="lunch"></div>
+                            <div class="meal-slot" data-day="wednesday" data-meal="lunch"></div>
+                            <div class="meal-slot" data-day="thursday" data-meal="lunch"></div>
+                            <div class="meal-slot" data-day="friday" data-meal="lunch"></div>
+                            <div class="meal-slot" data-day="saturday" data-meal="lunch"></div>
+                            <div class="meal-slot" data-day="sunday" data-meal="lunch"></div>
+                        </div>
+
+                        <div class="meal-type-row">
+                            <div class="meal-type-label">Ужин</div>
+                            <div class="meal-slot" data-day="monday" data-meal="dinner"></div>
+                            <div class="meal-slot" data-day="tuesday" data-meal="dinner"></div>
+                            <div class="meal-slot" data-day="wednesday" data-meal="dinner"></div>
+                            <div class="meal-slot" data-day="thursday" data-meal="dinner"></div>
+                            <div class="meal-slot" data-day="friday" data-meal="dinner"></div>
+                            <div class="meal-slot" data-day="saturday" data-meal="dinner"></div>
+                            <div class="meal-slot" data-day="sunday" data-meal="dinner"></div>
+                        </div>
+
+                        <div class="meal-type-row">
+                            <div class="meal-type-label">Перекус</div>
+                            <div class="meal-slot" data-day="monday" data-meal="snack"></div>
+                            <div class="meal-slot" data-day="tuesday" data-meal="snack"></div>
+                            <div class="meal-slot" data-day="wednesday" data-meal="snack"></div>
+                            <div class="meal-slot" data-day="thursday" data-meal="snack"></div>
+                            <div class="meal-slot" data-day="friday" data-meal="snack"></div>
+                            <div class="meal-slot" data-day="saturday" data-meal="snack"></div>
+                            <div class="meal-slot" data-day="sunday" data-meal="snack"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-picker">
+                    <h3>Выберите рецепты</h3>
+                    <div class="recipe-picker-search">
+                        <input type="text" id="picker-search" placeholder="Поиск рецептов...">
+                    </div>
+                    <div id="recipe-picker-grid" class="recipe-picker-grid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="shopping-view" class="view">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Список Покупок</h2>
+                    <div class="shopping-controls">
+                        <button id="clear-shopping-btn" class="btn btn-secondary">Очистить список</button>
+                        <button id="export-shopping-btn" class="btn btn-primary">Скачать TXT</button>
+                    </div>
+                </div>
+
+                <div class="add-item-form">
+                    <input type="text" id="manual-item-name" placeholder="Название продукта">
+                    <input type="text" id="manual-item-quantity" placeholder="Количество">
+                    <select id="manual-item-category">
+                        <option value="овощи">Овощи</option>
+                        <option value="фрукты">Фрукты</option>
+                        <option value="молочные">Молочные продукты</option>
+                        <option value="мясо">Мясо и рыба</option>
+                        <option value="бакалея">Бакалея</option>
+                        <option value="специи">Специи и приправы</option>
+                        <option value="напитки">Напитки</option>
+                        <option value="прочее">Прочее</option>
+                    </select>
+                    <button id="add-manual-item-btn" class="btn btn-primary">Добавить</button>
+                </div>
+
+                <div id="shopping-categories" class="shopping-categories">
+                </div>
+
+                <div id="shopping-empty" class="empty-state" style="display: none;">
+                    <h3>Список покупок пуст</h3>
+                    <p>Добавьте рецепты в план питания или добавьте товары вручную</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="recipe-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Добавить рецепт</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="recipe-form" class="recipe-form">
+                <div class="form-group">
+                    <label for="recipe-name">Название рецепта *</label>
+                    <input type="text" id="recipe-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="recipe-description">Описание</label>
+                    <textarea id="recipe-description" rows="3"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recipe-time">Время готовки (мин) *</label>
+                        <input type="number" id="recipe-time" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipe-difficulty">Сложность *</label>
+                        <select id="recipe-difficulty" required>
+                            <option value="">Выберите сложность</option>
+                            <option value="легко">Легко</option>
+                            <option value="средне">Средне</option>
+                            <option value="сложно">Сложно</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipe-category">Категория *</label>
+                        <select id="recipe-category" required>
+                            <option value="">Выберите категорию</option>
+                            <option value="завтрак">Завтрак</option>
+                            <option value="обед">Обед</option>
+                            <option value="ужин">Ужин</option>
+                            <option value="десерт">Десерт</option>
+                            <option value="выпечка">Выпечка</option>
+                            <option value="закуски">Закуски</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Ингредиенты *</label>
+                    <div id="ingredients-list" class="ingredients-list">
+                    </div>
+                    <div class="ingredient-input">
+                        <input type="text" id="ingredient-name" placeholder="Название ингредиента">
+                        <input type="number" id="ingredient-quantity" placeholder="Количество" min="0" step="0.1">
+                        <select id="ingredient-unit">
+                            <option value="г">г</option>
+                            <option value="кг">кг</option>
+                            <option value="мл">мл</option>
+                            <option value="л">л</option>
+                            <option value="шт">шт</option>
+                            <option value="ст.л.">ст.л.</option>
+                            <option value="ч.л.">ч.л.</option>
+                            <option value="стакан">стакан</option>
+                            <option value="по вкусу">по вкусу</option>
+                        </select>
+                        <button type="button" id="add-ingredient-btn" class="btn btn-secondary">+</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Инструкции по приготовлению *</label>
+                    <div id="instructions-list" class="instructions-list">
+                    </div>
+                    <div class="instruction-input">
+                        <textarea id="instruction-text" placeholder="Введите шаг приготовления" rows="2"></textarea>
+                        <button type="button" id="add-instruction-btn" class="btn btn-secondary">+</button>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-recipe-btn">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить рецепт</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="recipe-detail-modal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="detail-recipe-name"></h3>
+                <div class="modal-actions">
+                    <button id="edit-recipe-btn" class="btn btn-secondary">Редактировать</button>
+                    <button id="delete-recipe-btn" class="btn btn-danger">Удалить</button>
+                    <button class="modal-close">&times;</button>
+                </div>
+            </div>
+            <div class="recipe-detail-content">
+                <div class="recipe-meta">
+                    <span class="recipe-time">⏱️ <span id="detail-time"></span> мин</span>
+                    <span class="recipe-difficulty">📊 <span id="detail-difficulty"></span></span>
+                    <span class="recipe-category">🏷️ <span id="detail-category"></span></span>
+                </div>
+                <div class="recipe-description">
+                    <p id="detail-description"></p>
+                </div>
+                <div class="recipe-ingredients">
+                    <h4>Ингредиенты:</h4>
+                    <ul id="detail-ingredients"></ul>
+                </div>
+                <div class="recipe-instructions">
+                    <h4>Приготовление:</h4>
+                    <div id="detail-instructions"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>Подтверждение</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message"></p>
+            </div>
+            <div class="modal-actions">
+                <button id="confirm-cancel" class="btn btn-secondary">Отмена</button>
+                <button id="confirm-delete" class="btn btn-danger">Удалить</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3 id="confirm-title">Подтверждение</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message">Вы уверены?</p>
+                <div class="form-actions">
+                    <button id="confirm-cancel" class="btn btn-secondary">Отмена</button>
+                    <button id="confirm-action" class="btn btn-danger">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" class="loading" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/recipe-manager.js"></script>
+    <script src="js/meal-planner.js"></script>
+    <script src="js/shopping-list.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
